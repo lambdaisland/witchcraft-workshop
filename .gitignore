@@ -12,7 +12,6 @@ paper-1.18.2.jar
 paper.yml
 permissions.yml
 plugins
-server.properties
 spigot.yml
 usercache.json
 version_history.json

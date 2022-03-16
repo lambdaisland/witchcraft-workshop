@@ -1,16 +1,32 @@
 #!/bin/sh
 
-MC_SERVER_TYPE=paper
-MC_VERSION=1.18.2
+# Script to run PaperMC together with the Witchcraft plugin. Will install both
+# if they are missing, so this is a one stop shop that should "just work". You
+# can adjust the versions below.
+#
+# Arguments are passed on to Paper. Run `bin/start-server nogui` to disable the
+# GUI.
 
+MC_SERVER_TYPE="paper"
+MC_VERSION="1.18.2"
 WITCHRAFT_PLUGIN_VERSION="0.7.37"
+# We go for a conservative heap size of 4Gb, use `MEMORY=8G bin/start-server` to change
+MEMORY="${MEMORY:-4G}"
+
+###############################################################################
 
 MC_SERVER_JAR="${MC_SERVER_TYPE}-${MC_VERSION}.jar"
 WITCHRAFT_PLUGIN_JAR="witchcraft-plugin-${WITCHRAFT_PLUGIN_VERSION}-for-${MC_SERVER_TYPE}-1.18-shaded.jar"
 
+
 trace() {
     echo "+" "$@"
     "$@"
+}
+
+exec_trace() {
+    echo "+" "$@"
+    exec "$@"
 }
 
 if [ ! -f "$MC_SERVER_JAR" ]; then
@@ -20,8 +36,8 @@ fi
 
 if [ ! -f "eula.txt" ]; then
     printf "\033[32m[start-server]\033[0m eula.txt not found. Do you agree to the Minecraft End User License Agreement (https://account.mojang.com/documents/minecraft_eula)? [y/N] "
-    read res
-    if [ "$res" = "$(echo y)" ] ||  [ "$res" = "$(echo Y)" ] ; then
+    read -r res
+    if [ "$res" = "$(printf 'y\n')" ] ||  [ "$res" = "$(printf 'Y\n')" ] ; then
         trace echo 'eula=true' > eula.txt
     else
         printf "\033[33m[start-server]\033[0m Minecraft won't run without an eula.txt, aborting."
@@ -34,7 +50,31 @@ fi
 if [ ! -f "plugins/$WITCHRAFT_PLUGIN_JAR" ]; then
     printf "\033[32m[start-server]\033[0m %s not found, downloading.\n" "plugins/${WITCHRAFT_PLUGIN_JAR}"
     mkdir -p plugins
-    trace curl --progress-bar -L "https://github.com/lambdaisland/witchcraft-plugin/releases/download/v${WITCHRAFT_PLUGIN_VERSION}/${WITCHRAFT_PLUGIN_JAR}" -o "plugins/$WITCHRAFT_PLUGIN_JAR"
+#    trace curl --progress-bar -L "https://github.com/lambdaisland/witchcraft-plugin/releases/download/v${WITCHRAFT_PLUGIN_VERSION}/${WITCHRAFT_PLUGIN_JAR}" -o "plugins/$WITCHRAFT_PLUGIN_JAR"
+    trace curl --progress-bar -L "https://github.com/lambdaisland/witchcraft-plugin/releases/download/v0.7.35/${WITCHRAFT_PLUGIN_JAR}" -o "plugins/$WITCHRAFT_PLUGIN_JAR"
 fi
 
-exec java -jar "$MC_SERVER_JAR" "$@"
+# https://blog.airplane.gg/aikar-flags/
+# https://aikar.co/mcflags.html
+exec_trace java  \
+     -Xms"$MEMORY"  \
+     -Xmx"$MEMORY"  \
+     -XX:+UseG1GC  \
+     -XX:+ParallelRefProcEnabled  \
+     -XX:MaxGCPauseMillis=200  \
+     -XX:+UnlockExperimentalVMOptions  \
+     -XX:+DisableExplicitGC  \
+     -XX:+AlwaysPreTouch  \
+     -XX:G1HeapWastePercent=5  \
+     -XX:G1MixedGCCountTarget=4  \
+     -XX:G1MixedGCLiveThresholdPercent=90  \
+     -XX:G1RSetUpdatingPauseTimePercent=5  \
+     -XX:SurvivorRatio=32  \
+     -XX:+PerfDisableSharedMem  \
+     -XX:MaxTenuringThreshold=1  \
+     -XX:G1NewSizePercent=30  \
+     -XX:G1MaxNewSizePercent=40  \
+     -XX:G1HeapRegionSize=8M  \
+     -XX:G1ReservePercent=20  \
+     -XX:InitiatingHeapOccupancyPercent=15  \
+     -jar "$MC_SERVER_JAR" "$@"
