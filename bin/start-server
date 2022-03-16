@@ -1,0 +1,32 @@
+#!/bin/sh
+
+MC_SERVER_TYPE=paper
+MC_VERSION=1.18.2
+
+MC_SERVER_JAR="${MC_SERVER_TYPE}-${MC_VERSION}.jar"
+
+trace() {
+    echo "+" "$@"
+    "$@"
+}
+
+if [ ! -f "$MC_SERVER_JAR" ]; then
+    printf "\033[32m[start-server]\033[0m %s not found, downloading.\n" "${MC_SERVER_JAR}"
+    trace curl --progress-bar -L "https://serverjars.com/api/fetchJar/${MC_SERVER_TYPE}/${MC_VERSION}" -o $MC_SERVER_JAR
+fi
+
+if [ ! -f "eula.txt" ]; then
+    printf "\033[32m[start-server]\033[0m eula.txt not found. Do you agree to the Minecraft End User License Agreement (https://account.mojang.com/documents/minecraft_eula)? [y/N] "
+    read res
+    if [ "$res" = "$(echo y)" ] ||  [ "$res" = "$(echo Y)" ] ; then
+        set -x
+        trace echo 'eula=true' > eula.txt
+        set +x > /dev/null
+    else
+        printf "\033[33m[start-server]\033[0m Minecraft won't run without an eula.txt, aborting."
+        exit 1
+    fi
+fi
+
+
+exec java -jar "$MC_SERVER_JAR" "$@"
