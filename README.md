@@ -38,4 +38,23 @@ will supply an nREPL inside the Minecraft process that we can then connect to.
 Everything is encapsulated in the `bin/start-server` script. This will download
 PaperMC and install the Witchcraft-plugin.
 
+## Understanding the Basics
+
+This workshop is open to anyone, regardless of whether you've actually played
+Minecraft before. That said it will help tremendously to be familiar with the
+basic concepts and mechanics. This goes for using Witchcraft in general, it pays
+off to spend a little bit of time just playing to game before you start
+manipulating it with code.
+
+The video series [Minecraft Survival
+Guide](https://www.youtube.com/playlist?list=PLgENJ0iY3XBjpNDm056_NSPhIntVMG0P8)
+by youtuber Pixlriffs contains a video on almost every aspect and mechanic in
+the game, and especially the first few are very instructive for anyone just
+starting out
+
+- [The Minecraft Player's Dictionary](https://www.youtube.com/watch?v=u7lE0MG80qw&list=PLgENJ0iY3XBjpNDm056_NSPhIntVMG0P8&index=1)
+- [Controls, Keyboard Shortcuts, and F3](https://www.youtube.com/watch?v=bkQqqxpqFo0&list=PLgENJ0iY3XBjpNDm056_NSPhIntVMG0P8&index=2)
+- [Video Settings & Accessibility](https://www.youtube.com/watch?v=W6eYr9lkK_s&list=PLgENJ0iY3XBjpNDm056_NSPhIntVMG0P8&index=3)
+
+
 
