@@ -1,0 +1,15 @@
+#!/bin/sh
+
+if [ "$1" = "" ]; then
+    echo "Usage: $0 <username>"
+    exit 1
+fi
+
+exec $(clojure -A:launcher-api -M -e '
+  (do
+    (require (quote [lambdaisland.witchcraft.launcher-api :as l]))
+    (run! print (interpose " " (l/launch-cmd
+      (l/launcher-backend "client")
+      (l/session {:username "'"$1"'" :session-id "x" :uuid (str (random-uuid))})
+      "1.18.2"))))
+' | sed "s^java^`which java`^")
