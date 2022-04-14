@@ -18,6 +18,8 @@ MEMORY="${MEMORY:-4G}"
 MC_SERVER_JAR="${MC_SERVER_TYPE}-${MC_VERSION}.jar"
 WITCHRAFT_PLUGIN_JAR="witchcraft-plugin-${WITCHRAFT_PLUGIN_VERSION}-for-${MC_SERVER_TYPE}-1.18-shaded.jar"
 
+BIN_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
+cd "$BIN_DIR/../server"
 
 trace() {
     echo "+" "$@"

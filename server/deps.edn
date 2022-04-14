@@ -1,0 +1,13 @@
+{:paths ["code"]
+ :deps {org.clojure/clojure {:mvn/version "1.11.0"}
+        com.lambdaisland/witchcraft {:local/root "/home/arne/github/lambdaisland/witchcraft"}
+        refactor-nrepl/refactor-nrepl {:mvn/version "2.5.1"}
+        cider/cider-nrepl {:mvn/version "0.26.0"}}
+
+ :aliases
+ {:launcher-api
+  {:extra-deps {sk.tomsik68/mclauncher-api {:mvn/version "0.3.6"}
+                progrock/progrock {:mvn/version "0.1.2"}}}}
+
+ :mvn/repos
+ {"sk_tomsik68" {:url "https://raw.githubusercontent.com/tomsik68/maven-repo/master/"}}}

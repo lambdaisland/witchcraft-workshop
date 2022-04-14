@@ -1,8 +1,4 @@
-{:paths ["code"]
- :deps {org.clojure/clojure {:mvn/version "1.11.0"}
-        com.lambdaisland/witchcraft {:mvn/version "RELEASE"}
-        refactor-nrepl/refactor-nrepl {:mvn/version "2.5.1"}
-        cider/cider-nrepl {:mvn/version "0.26.0"}}
+{:deps {org.clojure/clojure {:mvn/version "1.11.1"}}
 
  :aliases
  {:launcher-api
