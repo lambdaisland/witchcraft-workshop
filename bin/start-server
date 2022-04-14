@@ -21,6 +21,17 @@ WITCHRAFT_PLUGIN_JAR="witchcraft-plugin-${WITCHRAFT_PLUGIN_VERSION}-for-${MC_SER
 BIN_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
 cd "$BIN_DIR/../server"
 
+JAVA_CMD="${JAVA_CMD:-$(command -v java)}"
+
+if [ -z "$JAVA_CMD" ]; then
+  if [ -n "$JAVA_HOME" ] && [-x "$JAVA_HOME/bin/java"]; then
+    JAVA_CMD="$JAVA_HOME/bin/java"
+  else
+    >&2 echo "Couldn't find 'java'. Please set JAVA_HOME."
+    exit 1
+  fi
+fi
+
 trace() {
     echo "+" "$@"
     "$@"
@@ -58,7 +69,7 @@ fi
 
 # https://blog.airplane.gg/aikar-flags/
 # https://aikar.co/mcflags.html
-exec_trace java  \
+exec_trace "$JAVA_CMD"  \
      -Xms"$MEMORY"  \
      -Xmx"$MEMORY"  \
      -XX:+UseG1GC  \

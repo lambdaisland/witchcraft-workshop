@@ -1,6 +1,14 @@
 #!/bin/sh
 
+BIN_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
+
+if [ -f "$BIN_DIR/../client/versions/1.18.2/1.18.2.jar" ]; then
+  printf "\033[32m[install-client]\033[0m Client already installed, exiting.\n"
+  exit 1
+fi
+
+cd "$BIN_DIR/.."
 exec clojure -A:launcher-api -M -e '(do
- (require (quote [lambdaisland.witchcraft.launcher-api :as l])) 
+ (require (quote [lambdaisland.witchcraft.launcher-api :as l]))
  (l/update-minecraft (l/launcher-backend "client") "1.18.2"))
 '

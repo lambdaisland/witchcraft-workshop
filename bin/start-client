@@ -1,8 +1,32 @@
 #!/bin/sh
 
-if [ "$1" = "" ]; then
+MC_VERSION="1.18.2"
+BIN_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
+cd "$BIN_DIR/.."
+
+if [ -z "$1" ]; then
     echo "Usage: $0 <username>"
     exit 1
+fi
+
+JAVA_CMD="${JAVA_CMD:-$(command -v java)}"
+
+if [ -z "$JAVA_CMD" ]; then
+  if [ -n "$JAVA_HOME" ] && [-x "$JAVA_HOME/bin/java"]; then
+    JAVA_CMD="$JAVA_HOME/bin/java"
+  else
+    >&2 echo "Couldn't find 'java'. Please set JAVA_HOME."
+    exit 1
+  fi
+fi
+
+if [ ! -f "$BIN_DIR/../client/versions/$MC_VERSION/$MC_VERSION.jar" ]; then
+  printf "\033[32m[start-client]\033[0m Client not yet installed, installing now.\n"
+exec clojure -A:launcher-api -M -e '(do
+ (require (quote [lambdaisland.witchcraft.launcher-api :as l]))
+ (l/update-minecraft (l/launcher-backend "client") "'"$MC_VERSION"'"))
+'
+  exit 1
 fi
 
 exec $(clojure -A:launcher-api -M -e '
@@ -11,5 +35,5 @@ exec $(clojure -A:launcher-api -M -e '
     (run! print (interpose " " (l/launch-cmd
       (l/launcher-backend "client")
       (l/session {:username "'"$1"'" :session-id "x" :uuid (str (random-uuid))})
-      "1.18.2"))))
-' | sed "s^java^`which java`^")
+      "'"$MC_VERSION"'"))))
+' | sed "s^java^${JAVA_CMD}^")

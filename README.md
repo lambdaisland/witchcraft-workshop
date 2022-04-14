@@ -1,9 +1,6 @@
 # Clojure + Minecraft Workshop, ClojureD 2022
 
-
-Instructions and sample code for the
-[Witchcraft](https://github.com/lambdaisland/witchcraft) (Clojure+Minecraft)
-workshop given at ClojureD, June 2022.
+Instructions and REPL session code for the [Witchcraft](https://github.com/lambdaisland/witchcraft) (Clojure+Minecraft) workshop given at ClojureD, June 2022.
 
 ## Change the (Minecraft) World with Code
 
@@ -29,6 +26,14 @@ With these you should be able to install
 
 As per the instructions below
 
+### POSIX Compatible Shell
+
+The startup scripts assume a working Bourne Shell at `/bin/sh`. This is true of
+all POSIX compatible UNIX systems, including Linux and MacOS. On Windows we
+expect them to work on WSL, WSL2, git-bash, or Cygwin.
+
+The scripts also assume a working `curl`.
+
 ### Java 17
 
 Check the output of `java -version`
@@ -40,7 +45,15 @@ OpenJDK Runtime Environment (build 17+35-2724)
 OpenJDK 64-Bit Server VM (build 17+35-2724, mixed mode, sharing)
 ```
 
-When unsure look for AdoptOpenJDK for your platform, or use [sdkman](https://github.com/sdkman/sdkman-cli)
+If you don't have JDK 17, you have several options. If you are already using a
+package manager like Apt, Homebrew, Scoop, Chocolatey, then you should be able
+to get it from there.
+
+- Ubuntu has a `openjdk-17-jdk` package
+- Java is available from Homebrew on MacOS
+- On Windows using Scoop is an option, using the [Java Bucket](https://github.com/ScoopInstaller/Scoop/wiki/Java), or using [Chocolatey](https://community.chocolatey.org/packages/openjdk17)
+
+You can also [download OpenJDK directly](https://jdk.java.net/17/) for your platform, or use [sdkman](https://github.com/sdkman/sdkman-cli) which is a cross platform tool for managing Java version. 
 
 ```
 sdk install java 17-open
