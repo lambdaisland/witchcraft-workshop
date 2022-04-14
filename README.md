@@ -12,6 +12,16 @@ For best results join the workshop as a pair, so you have one laptop to display 
 
 We ask participants kindly to install Minecraft (server+client, see below) before the workshop so we can dive into the interesting bits right away, and we don't pull down the conference wifi when the workshop begins.
 
+## Quickstart for The Impatient
+
+- clone the repo https://github.com/lambdaisland/witchcraft-workshop/
+- run `bin/start-server` in one terminal
+- run `bin/start-client username` in another terminal
+- connect with your editor to nREPL at port 25555
+- from inside the game (i.e. the client started above) connect to server `localhost:25565` (choose: Multiplayer)
+- open `repl-sessions.s01-warmup` in your editor
+- start evaluating forms
+
 ## Requirements (tl;dr)
 
 - Java 17
