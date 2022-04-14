@@ -49,3 +49,16 @@
 ;; 1-9).
 ;;
 ;; Now press SPACE twice and click right. Free like a bird. By careful landing!
+
+;; Let's spawn some chickens!
+(def chickens
+  (doall
+   (repeatedly 10 #(wc/spawn (wc/add anchor [0 4 0]) :chicken))))
+
+;; And blow them up!
+
+(doseq [chicken chickens]
+  (let [loc (wc/location chicken)]
+    (.remove chicken)
+    (.createExplosion (wc/world loc) loc 5.0))
+  (Thread/sleep 500))

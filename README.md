@@ -160,6 +160,18 @@ These are the default bindings, they might be different based on your keyboard l
 - left click: destroy blocks (hold it down), attack enemies (click)
 - right click: place block or use item in hand
 - `e` open inventory
+- number keys (`1` - `9`) pick an item on your hotbar
 - `F2` screenshot (look in `client/screenshots`)
 - `F11` toggle fullscreen
 - `F3` debug mode (shows lots of info including coordinated, biome, block type)
+
+## The Workshop
+
+We'll be going through the REPL session files that you can find under
+`repl_sessions`. You can jump around between them, do things on your own pace,
+jump ahead, or go on a complete tangent, but we'll go through them in order
+during the workshop.
+
+- `s01-warmup` : Some examples of the things Witchcraft can do, to whet your
+  appetite. We're not going to dig too deep into things at this part, we just
+  want you to try them out and see what happens.
