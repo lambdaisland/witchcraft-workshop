@@ -26,7 +26,6 @@ exec clojure -A:launcher-api -M -e '(do
  (require (quote [lambdaisland.witchcraft.launcher-api :as l]))
  (l/update-minecraft (l/launcher-backend "client") "'"$MC_VERSION"'"))
 '
-  exit 1
 fi
 
 exec $(clojure -A:launcher-api -M -e '

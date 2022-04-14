@@ -107,21 +107,30 @@ will supply an nREPL inside the Minecraft process that we can then connect to.
 Everything is encapsulated in the `bin/start-server` script. This will download
 PaperMC and install the Witchcraft-plugin.
 
-## Connecting
+## Getting Connected
 
-Once your server is up and running you can connect to it both from the client
-and from your editor.
+### nREPL
 
-Client:
+The PaperMC Minecraft server is pre-loaded with the witchcraft-plugin, which
+exposes an nREPL server at port 25555. From your editor find the command to
+"connect to nREPL", for instance in Emacs: `M-x cider-connect-clj`.
 
-- On the main menu click on `Multiplayer`
-- Click on `Add Server`
-- Server Address: `localhost:25565`
-- Save the server, and double click on it in the list
+- Host: `localhost`
+- Port: `25555`
 
-Editor:
+### Client
 
-- Connect to nREPL at port 25555.
+Start the Minecraft game. You should see a screen with three buttons,
+"Singleplayer", "Multiplayer", "Minecraft Realms". Click on "Multiplayer", this
+will bring you to an (empty) list of servers to conect to.
+
+Click on `Add Server`, and for the Server Address type in `localhost:25565`.
+Click "Done", now you should see a server with as tagline "ClojureD Workshop" in
+the list. Double click on it and the game launches.
+
+At this point you want to press `F3+p` (hold `F3`, then press `p`), this toggles
+"Pause on Lost Focus". Make sure it says "Pause on Lost Focus: Disabled". Now
+you can switch to your editor (E.g. with Alt+Tab) while Minecraft stays visible.
 
 ## Understanding the Basics
 
@@ -142,4 +151,15 @@ starting out
 - [Video Settings & Accessibility](https://www.youtube.com/watch?v=W6eYr9lkK_s&list=PLgENJ0iY3XBjpNDm056_NSPhIntVMG0P8&index=3)
 
 
+### Keybindings
 
+These are the default bindings, they might be different based on your keyboard layout. We're only mentioning a few of them to get yout started. You can always find the current bindings, and change them, by pressing ESC > Options... > Controls > Key Binds...
+
+- `w`,`a`,`s`,`d` are your "arrow keys" for walking around
+- spacebar: jump, shift: crouch
+- left click: destroy blocks (hold it down), attack enemies (click)
+- right click: place block or use item in hand
+- `e` open inventory
+- `F2` screenshot (look in `client/screenshots`)
+- `F11` toggle fullscreen
+- `F3` debug mode (shows lots of info including coordinated, biome, block type)
