@@ -81,8 +81,17 @@ Clojure CLI version 1.10.3.967
 
 ### Getting Minecraft Client, Option 1: scripted
 
-If you have Minecraft already installed then you're all set, if not we provide
-two scripts to easily install and run it.
+If you have Minecraft already installed then you're all set, if not we
+provide two scripts to easily install and run it.
+
+These require a Minecraft Java Edition player account, which you get when
+[buying a copy of the game](https://www.minecraft.net/store/minecraft-java-edition), 
+which at the time of writing costs €23.95.
+
+Alternatively you can sign up for a “[XBOX PC Game Pass](https://www.xbox.com/xbox-game-pass/pc-game-pass)”
+for €1 for the first month, and then [immediately cancel](https://account.microsoft.com/services/pcgamepass/cancel?fref=billing-cancel).
+
+Once you have an account (do not try to download the game from the above sources), run:
 
 ```
 bin/install-client
@@ -90,17 +99,12 @@ bin/start-client myusername
 ```
 
 These should work even in offline mode (once installation is completed), so we
-can still run the workshop in case the conference wifi gets overloaded. Of
-course we expect everyone to have a Minecraft Java Edition player account, which
-you get when [buying a copy of the game](https://www.minecraft.net/de-de/store/minecraft-java-edition), which at
-the time of writing costs €23.95. Alternatively you can sign up for a “[XBOX PC
-Game Pass](https://www.xbox.com/de-DE/xbox-game-pass/pc-game-pass)” for €1 for
-the first month, and then immediately cancel.
+can still run the workshop in case the conference wifi gets overloaded. 
 
 ### Getting Minecraft Client, Option 2: Launcher
 
 Alternatively can also download the official launcher through the [Minecraft.net
-site](https://www.minecraft.net/de-de/download) or by installing
+site](https://www.minecraft.net/download) or by installing
 [MultiMC](https://multimc.org/), and then creating a new instance.
 
 Note that these last two are only launchers, you will have to go in and from the
@@ -116,6 +120,8 @@ will supply an nREPL inside the Minecraft process that we can then connect to.
 
 Everything is encapsulated in the `bin/start-server` script. This will download
 PaperMC and install the Witchcraft-plugin.
+
+The server startup is successful when you see `nREPL server started on port 25555 on host localhost - nrepl://localhost:25555`
 
 ## Getting Connected
 
