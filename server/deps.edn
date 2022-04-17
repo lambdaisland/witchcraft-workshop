@@ -1,6 +1,6 @@
 {:paths ["code"]
  :deps {org.clojure/clojure {:mvn/version "1.11.0"}
-        com.lambdaisland/witchcraft {:local/root "/home/arne/github/lambdaisland/witchcraft"}
+        com.lambdaisland/witchcraft {:mvn/version "0.16.246"}
         refactor-nrepl/refactor-nrepl {:mvn/version "2.5.1"}
         cider/cider-nrepl {:mvn/version "0.26.0"}}
 
