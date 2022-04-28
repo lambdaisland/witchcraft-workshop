@@ -11,6 +11,10 @@
 (defonce anchor (wc/loc me))
 (prn anchor)
 
+;; If it starts getting night and you can't see what you're doing, then time
+;; travel back to the morning.
+(wc/set-time 0)
+
 ;; Let's start with a splash, this puts a water block 5 blocks above your head
 (wc/set-blocks [[0 5 0 :water]] {:anchor anchor})
 
@@ -48,17 +52,16 @@
 ;; sure you have the rockets in your hand (mouse scroll wheel or number keys
 ;; 1-9).
 ;;
-;; Now press SPACE twice and click right. Free like a bird. By careful landing!
+;; Now press SPACE twice and click right. Free like a bird. Be careful landing!
 
 ;; Let's spawn some chickens!
 (def chickens
   (doall
    (repeatedly 10 #(wc/spawn (wc/add anchor [0 4 0]) :chicken))))
-
 ;; And blow them up!
 
 (doseq [chicken chickens]
-  (let [loc (wc/location chicken)]
-    (.remove chicken)
-    (.createExplosion (wc/world loc) loc 5.0))
+  (wc/despawn chicken)
+  ;; Witchcraft will convert `chicken` to a location
+  (wc/create-explosion chicken 5.0)
   (Thread/sleep 500))

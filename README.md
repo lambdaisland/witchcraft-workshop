@@ -10,13 +10,13 @@ In this fun and creative workshop you’ll play Minecraft via the REPL. Build am
 
 For best results join the workshop as a pair, so you have one laptop to display the game, and one for the REPL. You can run both on a single laptop, but it’s more fun with two.
 
-We ask participants kindly to install Minecraft (server+client, see below) before the workshop so we can dive into the interesting bits right away, and we don't pull down the conference wifi when the workshop begins.
+We kindly ask participants to install Minecraft (server+client, see below) before the workshop so we can dive into the interesting bits right away, and we don't pull down the conference wifi when the workshop begins.
 
 ## Quickstart for The Impatient
 
 - clone the repo https://github.com/lambdaisland/witchcraft-workshop/
 - run `bin/start-server` in one terminal
-- run `bin/start-client username` in another terminal
+- run `bin/start-client username` in another terminal (Skip this step if you have your own copy of Minecraft)
 - connect with your editor to nREPL at port 25555
 - from inside the game (i.e. the client started above) connect to server `localhost:25565` (choose: Multiplayer)
 - open `repl-sessions.s01-warmup` in your editor
@@ -31,7 +31,7 @@ We ask participants kindly to install Minecraft (server+client, see below) befor
 
 With these you should be able to install
 
-- The Minecraft client 1.18.2
+- The Minecraft game (i.e. the client), version 1.18.2
 - The PaperMC server
 
 As per the instructions below
@@ -46,7 +46,7 @@ The scripts also assume a working `curl`.
 
 ### Java 17
 
-Check the output of `java -version`
+Check the output of `java -version`, make sure it's at version 17.
 
 ```
 $ java -version
@@ -55,20 +55,33 @@ OpenJDK Runtime Environment (build 17+35-2724)
 OpenJDK 64-Bit Server VM (build 17+35-2724, mixed mode, sharing)
 ```
 
-If you don't have JDK 17, you have several options. If you are already using a
-package manager like Apt, Homebrew, Scoop, Chocolatey, then you should be able
-to get it from there.
+If you don't have Java yet or not the right version you will have to install it.
+You can get Java from many different sources. If you are already using a package
+manager for your operating system then use that, it's almost certain it will be
+in there.
 
-- Ubuntu has a `openjdk-17-jdk` package
-- Java is available from Homebrew on MacOS
-- On Windows using Scoop is an option, using the [Java Bucket](https://github.com/ScoopInstaller/Scoop/wiki/Java), or using [Chocolatey](https://community.chocolatey.org/packages/openjdk17)
-
-You can also [download OpenJDK directly](https://jdk.java.net/17/) for your platform, or use [sdkman](https://github.com/sdkman/sdkman-cli) which is a cross platform tool for managing Java version. 
+Cross platform:
+- [download OpenJDK directly](https://jdk.java.net/17/) for your platform
+- [sdkman](https://github.com/sdkman/sdkman-cli) is a cross platform tool for managing Java version (requires WSL/Cygwin/git-bash on Windows)
 
 ```
+curl -s "https://get.sdkman.io" | bash
+source "$HOME/.sdkman/bin/sdkman-init.sh"
 sdk install java 17-open
 sdk use java 17-open
 ```
+
+Linux:
+- Ubuntu has a `openjdk-17-jdk` package
+- Arch/Manjaro have `jdk17-openjdk`
+
+Mac OS X:
+- Java is available from Homebrew (`brew info java`)
+- [sdkman](https://github.com/sdkman/sdkman-cli) is a cross platform tool for managing Java version
+
+Windows:
+- On Windows using Scoop is an option, using the [Java Bucket](https://github.com/ScoopInstaller/Scoop/wiki/Java), 
+- Alternatively Windows users can use [Chocolatey](https://community.chocolatey.org/packages/openjdk17)
 
 ### Clojure CLI
 
@@ -84,13 +97,6 @@ Clojure CLI version 1.10.3.967
 If you have Minecraft already installed then you're all set, if not we
 provide two scripts to easily install and run it.
 
-These require a Minecraft Java Edition player account, which you get when
-[buying a copy of the game](https://www.minecraft.net/store/minecraft-java-edition), 
-which at the time of writing costs €23.95.
-
-Alternatively you can sign up for a “[XBOX PC Game Pass](https://www.xbox.com/xbox-game-pass/pc-game-pass)”
-for €1 for the first month, and then [immediately cancel](https://account.microsoft.com/services/pcgamepass/cancel?fref=billing-cancel).
-
 Once you have an account (do not try to download the game from the above sources), run:
 
 ```
@@ -99,13 +105,21 @@ bin/start-client myusername
 ```
 
 These should work even in offline mode (once installation is completed), so we
-can still run the workshop in case the conference wifi gets overloaded. 
+can still run the workshop in case the conference wifi gets overloaded. Of
+course we expect everyone to have a Minecraft player account.
 
 ### Getting Minecraft Client, Option 2: Launcher
 
 Alternatively can also download the official launcher through the [Minecraft.net
 site](https://www.minecraft.net/download) or by installing
 [MultiMC](https://multimc.org/), and then creating a new instance.
+
+You will need a Minecraft Java Edition player account, which you get when
+[buying a copy of the game](https://www.minecraft.net/store/minecraft-java-edition), 
+which at the time of writing costs €23.95.
+
+Alternatively you can sign up for a “[XBOX PC Game Pass](https://www.xbox.com/xbox-game-pass/pc-game-pass)”
+for €1 for the first month, and then [immediately cancel](https://account.microsoft.com/services/pcgamepass/cancel?fref=billing-cancel).
 
 Note that these last two are only launchers, you will have to go in and from the
 launcher install the actual game. We'll be using the latest stable version
@@ -151,9 +165,9 @@ you can switch to your editor (E.g. with Alt+Tab) while Minecraft stays visible.
 This part is a little tricky, Minecraft has a tendency to grab your mouse
 cursor. You can get it back with `ESC`, but that pauses the game, so you no
 longer see what's happening. What tends to work is putting the minecraft window
-and editor window side-by-side, then using a keyboard shortcut to switch to your
-editor. After that try not to hover over the minecraft window, or it will
-capture your mouse cursor again.
+and editor window side-by-side, then using a keyboard shortcut (e.g. `Alt-Tab`)
+to switch to your editor. After that try not to hover over the minecraft window,
+or it will capture your mouse cursor again.
 
 Alternatively pair up with someone, so you can connect with minecraft from one
 laptop, and with nREPL from the other. You can even have multiple players and
@@ -177,7 +191,6 @@ starting out
 - [Controls, Keyboard Shortcuts, and F3](https://www.youtube.com/watch?v=bkQqqxpqFo0&list=PLgENJ0iY3XBjpNDm056_NSPhIntVMG0P8&index=2)
 - [Video Settings & Accessibility](https://www.youtube.com/watch?v=W6eYr9lkK_s&list=PLgENJ0iY3XBjpNDm056_NSPhIntVMG0P8&index=3)
 
-
 ### Keybindings
 
 These are the default bindings, they might be different based on your keyboard layout. We're only mentioning a few of them to get yout started. You can always find the current bindings, and change them, by pressing ESC > Options... > Controls > Key Binds...
@@ -190,14 +203,14 @@ These are the default bindings, they might be different based on your keyboard l
 - number keys (`1` - `9`) pick an item on your hotbar
 - `F2` screenshot (look in `client/screenshots`)
 - `F11` toggle fullscreen
-- `F3` debug mode (shows lots of info including coordinated, biome, block type)
+- `F3` debug mode (shows lots of info including coordinates, biome, block type)
 
 ## The Workshop
 
 We'll be going through the REPL session files that you can find under
 `repl_sessions`. You can jump around between them, do things on your own pace,
-jump ahead, or go on a complete tangent, but we'll go through them in order
-during the workshop.
+jump ahead, or go on a complete tangent, but we'll likely present them roughly
+in order during the workshop.
 
 - `s01-warmup` : Some examples of the things Witchcraft can do, to whet your
   appetite. We're not going to dig too deep into things at this part, we just
