@@ -148,6 +148,17 @@ At this point you want to press `F3+p` (hold `F3`, then press `p`), this toggles
 "Pause on Lost Focus". Make sure it says "Pause on Lost Focus: Disabled". Now
 you can switch to your editor (E.g. with Alt+Tab) while Minecraft stays visible.
 
+This part is a little tricky, Minecraft has a tendency to grab your mouse
+cursor. You can get it back with `ESC`, but that pauses the game, so you no
+longer see what's happening. What tends to work is putting the minecraft window
+and editor window side-by-side, then using a keyboard shortcut to switch to your
+editor. After that try not to hover over the minecraft window, or it will
+capture your mouse cursor again.
+
+Alternatively pair up with someone, so you can connect with minecraft from one
+laptop, and with nREPL from the other. You can even have multiple players and
+coders connected to the same server for even more fun (or more chaos).
+
 ## Understanding the Basics
 
 This workshop is open to anyone, regardless of whether you've actually played
