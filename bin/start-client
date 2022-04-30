@@ -22,7 +22,7 @@ fi
 
 if [ ! -f "$BIN_DIR/../client/versions/$MC_VERSION/$MC_VERSION.jar" ]; then
   printf "\033[32m[start-client]\033[0m Client not yet installed, installing now.\n"
-exec clojure -A:launcher-api -M -e '(do
+  clojure -A:launcher-api -M -e '(do
  (require (quote [lambdaisland.witchcraft.launcher-api :as l]))
  (l/update-minecraft (l/launcher-backend "client") "'"$MC_VERSION"'"))
 '

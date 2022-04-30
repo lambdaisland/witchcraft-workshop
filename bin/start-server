@@ -42,11 +42,6 @@ exec_trace() {
     exec "$@"
 }
 
-if [ ! -f "$MC_SERVER_JAR" ]; then
-    printf "\033[32m[start-server]\033[0m %s not found, downloading.\n" "${MC_SERVER_JAR}"
-    trace curl --progress-bar -L "https://serverjars.com/api/fetchJar/${MC_SERVER_TYPE}/${MC_VERSION}" -o $MC_SERVER_JAR
-fi
-
 if [ ! -f "eula.txt" ]; then
     printf "\033[32m[start-server]\033[0m eula.txt not found. Do you agree to the Minecraft End User License Agreement (https://account.mojang.com/documents/minecraft_eula)? [y/N] "
     read -r res
@@ -56,6 +51,11 @@ if [ ! -f "eula.txt" ]; then
         printf "\033[33m[start-server]\033[0m Minecraft won't run without an eula.txt, aborting."
         exit 1
     fi
+fi
+
+if [ ! -f "$MC_SERVER_JAR" ]; then
+    printf "\033[32m[start-server]\033[0m %s not found, downloading.\n" "${MC_SERVER_JAR}"
+    trace curl --progress-bar -L "https://serverjars.com/api/fetchJar/${MC_SERVER_TYPE}/${MC_VERSION}" -o $MC_SERVER_JAR
 fi
 
 # URLs have conflicting versions, fix plugin release process first
