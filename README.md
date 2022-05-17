@@ -215,3 +215,13 @@ in order during the workshop.
 - `s01-warmup` : Some examples of the things Witchcraft can do, to whet your
   appetite. We're not going to dig too deep into things at this part, we just
   want you to try them out and see what happens.
+
+- `s02-locations-blocks-entities` : A more theoretical lesson where you learn
+  about some of the core minecraft/bukkit/witchcraft concepts, and get to see
+  how we provide a Clojure-y API on top of that.
+  
+- `s03-drawing-with-shapes` : Your first creation, a humonguous clown emoji, and
+  an introduction to the shapes namespace.
+  
+- `s04-palettes-and-textures`: Use code to explore palettes and find the perfect
+  blocks for your creations.

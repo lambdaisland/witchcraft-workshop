@@ -1,13 +1,9 @@
 {:paths ["code"]
- :deps {org.clojure/clojure {:mvn/version "1.11.0"}
-        com.lambdaisland/witchcraft {:mvn/version "0.16.246"}
-        refactor-nrepl/refactor-nrepl {:mvn/version "2.5.1"}
-        cider/cider-nrepl {:mvn/version "0.26.0"}}
-
- :aliases
- {:launcher-api
-  {:extra-deps {sk.tomsik68/mclauncher-api {:mvn/version "0.3.6"}
-                progrock/progrock {:mvn/version "0.1.2"}}}}
+ :deps  {org.clojure/clojure           {:mvn/version "1.11.0"}
+         com.lambdaisland/witchcraft   {:mvn/version "RELEASE"}
+         refactor-nrepl/refactor-nrepl {:mvn/version "2.5.1"}
+         clojure2d/clojure2d           {:mvn/version "1.4.4"}
+         cider/cider-nrepl             {:mvn/version "RELEASE"}}
 
  :mvn/repos
  {"sk_tomsik68" {:url "https://raw.githubusercontent.com/tomsik68/maven-repo/master/"}}}
