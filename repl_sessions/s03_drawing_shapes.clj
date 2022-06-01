@@ -3,7 +3,10 @@
   can start building cool things through code."
   (:require [lambdaisland.witchcraft :as wc]
             [lambdaisland.witchcraft.shapes :as shapes]
-            [lambdaisland.witchcraft.gallery.big-chicken :refer [chicken-shape]]))
+            [lambdaisland.witchcraft.matrix :as m]
+            [lambdaisland.witchcraft.gallery.big-chicken
+             :as chicken
+             :refer [chicken-shape]]))
 
 (def me (wc/player))
 
@@ -200,3 +203,13 @@
 ;; `rectube`, to make your own creation. In the process you might want to find
 ;; nice materials that give you the color and texture you want, that's what
 ;; we'll talk about in the next section.
+
+;; The shapes API works well with the matric API, which gives you a number of
+;; linear algebra operations with vectors and matrices.
+
+
+(doseq [angle [0 Math/PI (/ Math/PI 2) (- (/ Math/PI 2))]]
+  (wc/set-blocks
+   (->> chicken/chicken
+        (m/rotate angle :x :z)
+        (m/translate (wc/target-block me)))))
