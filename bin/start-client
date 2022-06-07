@@ -28,11 +28,11 @@ if [ ! -f "$BIN_DIR/../client/versions/$MC_VERSION/$MC_VERSION.jar" ]; then
 '
 fi
 
-exec $(clojure -A:launcher-api -M -e '
+clojure -A:launcher-api -M -e '
   (do
     (require (quote [lambdaisland.witchcraft.launcher-api :as l]))
-    (run! print (interpose " " (l/launch-cmd
+    (println (l/launch-cmd-str
       (l/launcher-backend "client")
       (l/session {:username "'"$1"'" :session-id "x" :uuid (str (random-uuid))})
-      "'"$MC_VERSION"'"))))
-' | sed "s^java^${JAVA_CMD}^")
+      "'"$MC_VERSION"'")))
+' | sed "s^java^${JAVA_CMD}^" | sh
