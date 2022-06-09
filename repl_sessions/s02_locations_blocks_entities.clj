@@ -25,6 +25,12 @@
 ;; org.bukkit.Location
 
 (wc/location me)
+(wc/loc me)
+(wc/locv me)
+
+(wc/location me)
+(wc/location {:x 123 :y 44 :z 66 :pitch 20 :yaw 99})
+(wc/location [123 44 66])
 
 ;; This returns an instance of `org.bukkit.Location`. Note that witchraft
 ;; installs a print-handler, which is why it still looks kind of Clojure-y. We

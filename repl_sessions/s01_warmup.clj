@@ -3,6 +3,9 @@
   (:require [lambdaisland.witchcraft :as wc]
             [lambdaisland.witchcraft.markup :as markup]))
 
+(wc/set-time 1000)
+(wc/set-game-rule :do-daylight-cycle false)
+
 ;; Welcome to the Witchcraft workshop! Hopefully you managed to get your server
 ;; running, and managed to connect to it, both from the game (bin/start-client,
 ;; then connect to localhost:25565), and with your editor where you are reading
@@ -46,7 +49,9 @@
 (wc/set-time 0)
 
 ;; Let's start with a splash, this puts a water block 5 blocks above your head
-(wc/set-blocks [[0 5 0 :water]] {:anchor anchor})
+(wc/set-blocks
+ [[0 5 0 :water]]
+ {:anchor anchor})
 
 ;; And take it away again
 (wc/undo!)
@@ -73,6 +78,7 @@
 (def chickens
   (doall
    (repeatedly 10 #(wc/spawn (wc/add anchor [0 4 0]) :chicken))))
+
 ;; And blow them up!
 
 (doseq [chicken chickens]

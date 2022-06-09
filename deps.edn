@@ -1,5 +1,5 @@
 {:deps {org.clojure/clojure {:mvn/version "1.11.1"}
-        com.lambdaisland/witchcraft {:mvn/version "RELEASE"}}
+        com.lambdaisland/witchcraft {:mvn/version "0.36.317"}}
 
  :aliases
  {:launcher-api
