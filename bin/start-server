@@ -55,7 +55,7 @@ fi
 
 if [ ! -f "$MC_SERVER_JAR" ]; then
     printf "\033[32m[start-server]\033[0m %s not found, downloading.\n" "${MC_SERVER_JAR}"
-    trace curl --progress-bar -L "https://serverjars.com/api/fetchJar/${MC_SERVER_TYPE}/${MC_VERSION}" -o $MC_SERVER_JAR
+    trace curl --progress-bar -L "https://serverjars.com/api/fetchJar/servers/${MC_SERVER_TYPE}/${MC_VERSION}" -o $MC_SERVER_JAR
 fi
 
 # URLs have conflicting versions, fix plugin release process first
