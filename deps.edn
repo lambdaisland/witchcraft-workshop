@@ -3,7 +3,7 @@
 
  :aliases
  {:launcher-api
-  {:extra-deps {sk.tomsik68/mclauncher-api {:mvn/version "0.3.6"}
+  {:extra-deps {sk.tomsik68/mclauncher-api {:mvn/version "0.3.7"}
                 progrock/progrock {:mvn/version "0.1.2"}}}}
 
  :mvn/repos
