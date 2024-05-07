@@ -1,36 +1,48 @@
-#!/bin/sh
+#!/bin/sh -e
 
-# Script to run PaperMC together with the Witchcraft plugin. Will install both
-# if they are missing, so this is a one stop shop that should "just work". You
-# can adjust the versions below.
-#
-# Arguments are passed on to Paper. Run `bin/start-server nogui` to disable the
-# GUI.
+## 
+## Dieses Skript macht folgendes:
+##
+## * Download des PaperMC Servers von MC_DOWNLOAD_URL nach server/paper-1.18.2.jar
+## * Download des Witchcraft-Plugins nach server/plugins/witchcraft-plugin-0.7.37-for-paper-1.18-shaded.jar
+## * Start des Servers
+## 
+## Dieses ist ein Bash-Skript https://de.wikipedia.org/wiki/Bash_(Shell). 
+## Du benötigst eine Bash, um dieses Skript auszuführen. Du kannst das Skript
+## NICHT direkt aus einer Windows-CMD-Shell oder Windows-Powershell heraus aufrufen. Wenn du unter Windows
+## arbeitest, kannst du dir z.B. "Git for Windows Portable" (https://git-scm.com/download/win) installieren.
+## Darin ist eine Bash enthalten, die du unter Windows starten kannst und aus dieser Bash heraus kannst
+## du dann dieses Skript aufrufen.
+##
+## Du kannst dieses Skript z.B. wie folgt aufrufen. Zuvor musst du aber in der Bash mit "cd" in das 
+## Minecraft-Workshop-Wurzel-Verzeichnis wechseln.
+## 
+## JAVA_CMD=/c/java/jdk-17.0.8+7/bin/java ./bin/start-server
+##
+## Falls der Download aus irgendwelchen Gründen abbricht und damit nicht vollständig erfolgt ist, musst du die
+## Dateien server/paper-1.18.2.jar und server/plugins/witchcraft-plugin-0.7.37-for-paper-1.18-shaded.jar löschen
+## und das Skript erneut aufrufen.
+##
 
-MC_SERVER_TYPE="paper"
+## Mit Java 17 getestet.
+: ${JAVA_CMD:? Bitte JAVA_CMD setzen.}
+
+MC_DOWNLOAD_URL=${MC_DOWNLOAD_URL:-https://api.papermc.io/v2/projects/paper/versions/1.18.2/builds/388/downloads/paper-1.18.2-388.jar}
+
 MC_VERSION="1.18.2"
 WITCHRAFT_PLUGIN_VERSION="0.7.37"
-# We go for a conservative heap size of 4Gb, use `MEMORY=8G bin/start-server` to change
-MEMORY="${MEMORY:-4G}"
+
+# Wir nutzen als Default 1G, weil wir auf den PCs der Schule während der Programmier-AG Probleme mit 4G hatten.
+# Im Original wurde 4G verwendet.
+MEMORY="${MEMORY:-1G}"
 
 ###############################################################################
 
-MC_SERVER_JAR="${MC_SERVER_TYPE}-${MC_VERSION}.jar"
-WITCHRAFT_PLUGIN_JAR="witchcraft-plugin-${WITCHRAFT_PLUGIN_VERSION}-for-${MC_SERVER_TYPE}-1.18-shaded.jar"
+MC_SERVER_JAR="paper-${MC_VERSION}.jar"
+WITCHRAFT_PLUGIN_JAR="witchcraft-plugin-${WITCHRAFT_PLUGIN_VERSION}-for-paper-1.18-shaded.jar"
 
 BIN_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
 cd "$BIN_DIR/../server"
-
-JAVA_CMD="${JAVA_CMD:-$(command -v java)}"
-
-if [ -z "$JAVA_CMD" ]; then
-  if [ -n "$JAVA_HOME" ] && [-x "$JAVA_HOME/bin/java"]; then
-    JAVA_CMD="$JAVA_HOME/bin/java"
-  else
-    >&2 echo "Couldn't find 'java'. Please set JAVA_HOME."
-    exit 1
-  fi
-fi
 
 trace() {
     echo "+" "$@"
@@ -55,16 +67,13 @@ fi
 
 if [ ! -f "$MC_SERVER_JAR" ]; then
     printf "\033[32m[start-server]\033[0m %s not found, downloading.\n" "${MC_SERVER_JAR}"
-    trace curl --progress-bar -L "https://serverjars.com/api/fetchJar/servers/${MC_SERVER_TYPE}/${MC_VERSION}" -o $MC_SERVER_JAR
+    trace curl ${CURL_OPTS} --progress-bar -L ${MC_DOWNLOAD_URL} -o $MC_SERVER_JAR
 fi
-
-# URLs have conflicting versions, fix plugin release process first
 
 if [ ! -f "plugins/$WITCHRAFT_PLUGIN_JAR" ]; then
     printf "\033[32m[start-server]\033[0m %s not found, downloading.\n" "plugins/${WITCHRAFT_PLUGIN_JAR}"
     mkdir -p plugins
-#    trace curl --progress-bar -L "https://github.com/lambdaisland/witchcraft-plugin/releases/download/v${WITCHRAFT_PLUGIN_VERSION}/${WITCHRAFT_PLUGIN_JAR}" -o "plugins/$WITCHRAFT_PLUGIN_JAR"
-    trace curl --progress-bar -L "https://github.com/lambdaisland/witchcraft-plugin/releases/download/v0.7.35/${WITCHRAFT_PLUGIN_JAR}" -o "plugins/$WITCHRAFT_PLUGIN_JAR"
+    trace curl ${CURL_OPTS} --progress-bar -L "https://github.com/lambdaisland/witchcraft-plugin/releases/download/v0.7.35/${WITCHRAFT_PLUGIN_JAR}" -o "plugins/$WITCHRAFT_PLUGIN_JAR"
 fi
 
 # https://blog.airplane.gg/aikar-flags/

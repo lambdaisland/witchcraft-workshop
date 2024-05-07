@@ -22,3 +22,6 @@ world_nether
 world_the_end
 client
 .cpcache
+.clj-kondo/
+.lsp/
+server/.nrepl-port

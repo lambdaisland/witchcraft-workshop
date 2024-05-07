@@ -1,5 +1,34 @@
 #!/bin/sh
 
+## 
+## Dieses Skript macht folgendes:
+##
+## * Download des MC Clients
+## * Start des MC Clients
+## 
+## Du wirst wahrscheinlich schon einen Minecraft-Launcher bei dir installiert haben. Falls
+## das der Fall ist, kannst du darüber einfach Minecraft-Java-Edition 1.18.2 starten.
+## Falls du keinen Launcher hast, kannst du dieses Skript nutzen, um die "Minecraft GUI" zu starten.
+##
+## Dieses ist ein Bash-Skript https://de.wikipedia.org/wiki/Bash_(Shell). 
+## Du benötigst eine Bash, um dieses Skript auszuführen. Du kannst das Skript
+## NICHT direkt aus einer Windows-CMD-Shell oder Windows-Powershell heraus aufrufen. Wenn du unter Windows
+## arbeitest, kannst du dir z.B. "Git for Windows Portable" (https://git-scm.com/download/win) installieren.
+## Darin ist eine Bash enthalten, die du unter Windows starten kannst und aus dieser Bash heraus kannst
+## du dann dieses Skript aufrufen.
+##
+## Du kannst dieses Skript z.B. wie folgt aufrufen. Zuvor musst du aber in der Bash mit "cd" in das 
+## Minecraft-Workshop-Wurzel-Verzeichnis wechseln. Den Namen hugo sollest ersetzen.
+## 
+## JAVA_CMD=/c/java/jdk-17.0.8+7/bin/java ./bin/start-client hugo
+##
+## Falls der Download aus irgendwelchen Gründen abbricht und damit nicht vollständig erfolgt ist, musst du die
+## Dateien unter client/ löschen und das Skript erneut aufrufen.
+##
+
+## Mit Java 17 getestet.
+: ${JAVA_CMD:? Bitte JAVA_CMD setzen.}
+
 MC_VERSION="1.18.2"
 BIN_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
 cd "$BIN_DIR/.."
@@ -9,29 +38,31 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-JAVA_CMD="${JAVA_CMD:-$(command -v java)}"
-
-if [ -z "$JAVA_CMD" ]; then
-  if [ -n "$JAVA_HOME" ] && [-x "$JAVA_HOME/bin/java"]; then
-    JAVA_CMD="$JAVA_HOME/bin/java"
-  else
-    >&2 echo "Couldn't find 'java'. Please set JAVA_HOME."
-    exit 1
-  fi
-fi
-
 if [ ! -f "$BIN_DIR/../client/versions/$MC_VERSION/$MC_VERSION.jar" ]; then
-  printf "\033[32m[start-client]\033[0m Client not yet installed, installing now.\n"
+  printf "\033[32m[start-client]\033[0m Client ist noch nicht installiert. Installation gestartet ...\n"
   clojure -A:launcher-api -M -e '(do
  (require (quote [lambdaisland.witchcraft.launcher-api :as l]))
  (l/update-minecraft (l/launcher-backend "client") "'"$MC_VERSION"'"))
 '
 fi
 
+printf "\033[32m[start-client]\033[0m GUI wird gestartet. Das dauert einen Augenblick ....\n"
+
 clojure -A:launcher-api -M -e '
   (do
-    (require (quote [lambdaisland.witchcraft.launcher-api :as l]))
-    (println (l/launch-cmd-str
+    (require (quote [lambdaisland.witchcraft.launcher-api :as l])
+             (quote [clojure.string :as str]))
+
+    (defn launch-cmd-str [backend session version]
+      (let [args (l/launch-cmd backend session version)]
+        (str/join " " (cons (first args)
+                            (map (comp 
+                              #(if (str/includes? %1 "\\\\")
+                                 (str "'\''" %1 "'\''")
+                                 %1)
+                              l/shellquote) (next args))))))
+
+    (println (launch-cmd-str
       (l/launcher-backend "client")
       (l/session {:username "'"$1"'" :session-id "x" :uuid (str (random-uuid))})
       "'"$MC_VERSION"'")))
