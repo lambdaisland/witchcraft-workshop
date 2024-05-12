@@ -25,3 +25,4 @@ client
 .clj-kondo/
 .lsp/
 server/.nrepl-port
+.calva/

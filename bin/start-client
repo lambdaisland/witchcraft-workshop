@@ -48,6 +48,9 @@ fi
 
 printf "\033[32m[start-client]\033[0m GUI wird gestartet. Das dauert einen Augenblick ....\n"
 
+## Taken from https://stackoverflow.com/a/2705678
+ESCAPED_JAVA_CMD=$(printf '%s\n' "${JAVA_CMD}" | sed -e 's/[\/&]/\\&/g')
+
 clojure -A:launcher-api -M -e '
   (do
     (require (quote [lambdaisland.witchcraft.launcher-api :as l])
@@ -66,4 +69,4 @@ clojure -A:launcher-api -M -e '
       (l/launcher-backend "client")
       (l/session {:username "'"$1"'" :session-id "x" :uuid (str (random-uuid))})
       "'"$MC_VERSION"'")))
-' | sed "s^java^${JAVA_CMD}^" | sh
+' | sed "s^java^'${ESCAPED_JAVA_CMD}'^" | sh
